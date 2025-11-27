@@ -91,4 +91,8 @@ public class MCWebSocketServer extends WebSocketServer {
         return null;
     }
 
+    public WebSocket getWSUser(String name) {
+        return SESSIONS_CLIENT_ID.get(name);
+    }
+
 }

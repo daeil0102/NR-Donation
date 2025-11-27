@@ -2,6 +2,7 @@ package net.teujaem.nrDonation.websoket;
 
 import net.teujaem.nrDonation.Main;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.java_websocket.WebSocket;
 
 public class MCWebSocketServerApplication {
@@ -36,6 +37,12 @@ public class MCWebSocketServerApplication {
 
     public void sendUser(WebSocket ws, String message) {
         if (!started) return;
+        server.sendUser(ws, message);
+    }
+
+    public void sendUser(Player player, String message) {
+        if (!started) return;
+        WebSocket ws = server.getWSUser(player.getName());
         server.sendUser(ws, message);
     }
 
