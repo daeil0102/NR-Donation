@@ -43,7 +43,7 @@ public class EventRunHandler {
                     String sender = messages[4];
                     int amount;
                     String eventMessage = "null";
-                    if (!(messages[6] == null || messages[6].isEmpty())) {
+                    if (messages[6] != null) {
                         eventMessage = messages[6];
                     }
                     //예외처리
@@ -64,7 +64,7 @@ public class EventRunHandler {
                     String flatform = messages[3];
                     String sender = messages[4];
                     String eventMessage = "null";
-                    if (!(messages[5] == null || messages[5].isEmpty())) {
+                    if (messages[5] != null) {
                         eventMessage = messages[5];
                     }
                     if ( //예외처리
