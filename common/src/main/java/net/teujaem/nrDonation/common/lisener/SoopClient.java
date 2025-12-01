@@ -11,6 +11,7 @@ import net.teujaem.nrDonation.common.data.soop.doantion.DonationList;
 import net.teujaem.nrDonation.common.websocket.sender.MCWebSocketSendMessage;
 
 import java.io.IOException;
+import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 
 public class SoopClient {
@@ -29,7 +30,7 @@ public class SoopClient {
 
         CLIENT_ID = MainAPI.getInstance().getDataClassManager().getApiKey().getId(PlatformType.SOOP);
         CLIENT_SECRET = MainAPI.getInstance().getDataClassManager().getApiKey().getSecret(PlatformType.SOOP);
-        SESSION_ID = MainAPI.getInstance().getPlayerName();
+        SESSION_ID = MainAPI.getInstance().getPlayerName() + "_" + UUID.randomUUID().toString().replace("-", "");
         ACCESS_TOKEN = MainAPI.getInstance().getDataClassManager().getAccessToken().getSoop();
         BASE_URL = "http://" + MainAPI.getInstance().getDataClassManager().getNodeJSUrl().getURL();
         donationList = MainAPI.getInstance().getDataClassManager().getDonationList();
