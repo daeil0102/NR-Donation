@@ -53,6 +53,7 @@ public class NrDonationClient implements ClientModInitializer {
 
             mainAPI = new MainAPI(MinecraftClient.getInstance().player.getName().getString());
 
+            // 로그인 감지를 위한 interface 추가
             eventManager = mainAPI.getEventManager();
 
             eventManager.addListener(message -> {
@@ -70,23 +71,34 @@ public class NrDonationClient implements ClientModInitializer {
                 }
             });
 
+            // 마인크래프트 config 로딩
             new ConfigManager();
 
+            // 메인 시스템에 data 관리 class 로딩
             dataClassManager = mainAPI.getDataClassManager();
 
+            // 숲, 치지직 연동을 위한 callback 서버 실행
             try {
                 new CallbackServer();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
 
+            // 메세지를 보내기 위한 handler class 로딩
             messageHandler = new MessageHandler(MinecraftClient.getInstance().player);
 
+            // 마크 서버와 연동할 ws 로딩
             mainAPI.getDataClassManager().crateMcWebSocketClient();
 
         });
 
     }
+
+    /*
+
+    이 아래 부터는 private 메서드 입니다
+
+    */
 
     //클라이언트 커맨드 추가
     private void loadCommand() {
@@ -119,6 +131,13 @@ public class NrDonationClient implements ClientModInitializer {
         });
 
     }
+
+    /*
+
+    이 이래 부터는 forge에서도 사용할 수 있는
+    fabric API 사용 안하는 private 메서드 입니다
+
+    */
 
     //로그인 시도
     private void login(PlatformType platformType) {
