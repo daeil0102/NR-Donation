@@ -4,6 +4,7 @@ import net.teujaem.nrDonation.common.MainAPI;
 import net.teujaem.nrDonation.common.util.UrlEncoding;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ChzzkCreateCode {
@@ -20,14 +21,11 @@ public class ChzzkCreateCode {
 
     public URI getLoginUrl() {
 
-        // body setting
-        Map<String, String> map = Map.of(
-        "clientId", clientId,
-        "redirectUri", REDIRECT_URI,
-        "state", state
-        );
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("clientId", clientId);
+        map.put("redirectUri", REDIRECT_URI);
+        map.put("state", state);
 
         return URI.create(BASE_URL + UrlEncoding.toXWwwFormUrl(map));
-
     }
 }

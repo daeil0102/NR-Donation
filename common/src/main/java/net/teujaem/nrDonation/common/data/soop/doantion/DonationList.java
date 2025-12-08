@@ -38,7 +38,7 @@ public class DonationList {
             // 첫 번째 요소 제거
             donations.remove(0);
 
-        }, 50, 50, TimeUnit.MILLISECONDS);
+        }, 100, 100, TimeUnit.MILLISECONDS);
     }
 
 

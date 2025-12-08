@@ -1,7 +1,7 @@
 package net.teujaem.nrDonation.common.util;
 
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 public class UrlEncoding {
@@ -26,17 +26,26 @@ public class UrlEncoding {
         return sb.toString();
     }
 
-
-
     public static String toXWwwFormUrl(Map<String, String> map) {
         StringBuilder body = new StringBuilder();
+
         for (Map.Entry<String, String> entry : map.entrySet()) {
-            if (!body.isEmpty()) body.append("&");
-            body.append(URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8));
+
+            if (body.length() > 0) body.append("&");
+
+            body.append(encode(entry.getKey()));
             body.append("=");
-            body.append(URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8));
+            body.append(encode(entry.getValue()));
         }
 
         return body.toString();
+    }
+
+    private static String encode(String value) {
+        try {
+            return URLEncoder.encode(value, "UTF-8"); // Java 8: charset as String
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

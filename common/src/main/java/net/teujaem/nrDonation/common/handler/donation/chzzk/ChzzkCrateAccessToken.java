@@ -3,11 +3,9 @@ package net.teujaem.nrDonation.common.handler.donation.chzzk;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.teujaem.nrDonation.common.util.UrlEncoding;
+import okhttp3.*;
 
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ChzzkCrateAccessToken {
@@ -17,6 +15,8 @@ public class ChzzkCrateAccessToken {
     private final String clientId;
     private final String clientSecret;
 
+    private static final OkHttpClient client = new OkHttpClient();
+
     public ChzzkCrateAccessToken(String clientId, String clientSecret) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
@@ -24,37 +24,36 @@ public class ChzzkCrateAccessToken {
 
     public String getAccessToken(String code, String state) throws Exception {
 
-        // body setting
-        Map<String, String> map = Map.of(
-                "grantType", "authorization_code",
-                "clientId", clientId,
-                "clientSecret", clientSecret,
-                "code", code,
-                "state", state
-        );
+        // body setting (Map.of → JDK 8 불가 → HashMap 사용)
+        Map<String, String> map = new HashMap<>();
+        map.put("grantType", "authorization_code");
+        map.put("clientId", clientId);
+        map.put("clientSecret", clientSecret);
+        map.put("code", code);
+        map.put("state", state);
 
         String body = UrlEncoding.toJson(map);
 
-        // GET tokens
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL))
-                .header("Content-Type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(body))
+        // POST tokens (java.net.http 제거 → OkHttp로 대체)
+        Request request = new Request.Builder()
+                .url(BASE_URL)
+                .post(RequestBody.create(
+                        body,
+                        MediaType.parse("application/json")
+                ))
+                .addHeader("Content-Type", "application/json")
                 .build();
 
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        Response response = client.newCall(request).execute();
 
-        if (response.statusCode() == 200) {
+        if (response.code() == 200) {
             ObjectMapper mapper = new ObjectMapper();
-            JsonNode json = mapper.readTree(response.body());
+            JsonNode json = mapper.readTree(response.body().string());
             JsonNode content = json.path("content");
 
             return content.path("accessToken").asText(null);
-
         }
 
         return null;
-
     }
 }

@@ -1,12 +1,12 @@
 package net.teujaem.nrDonation.common.handler.donation.soop;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URLEncoder;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
 
 public class SoopCreateCode {
 
@@ -18,27 +18,24 @@ public class SoopCreateCode {
         SoopCreateCode.clientId = clientId;
     }
 
-    public URI getLoginUrl() throws IOException, InterruptedException {
+    public URI getLoginUrl() throws IOException {
 
-        String query = "client_id=" + URLEncoder.encode(clientId, StandardCharsets.UTF_8);
-
+        String query = "client_id=" + URLEncoder.encode(clientId, "UTF-8");
         String url = BASE_URL + "?" + query;
 
-        // create url
-        HttpClient client = HttpClient.newBuilder()
-                .followRedirects(HttpClient.Redirect.ALWAYS)
+        OkHttpClient client = new OkHttpClient.Builder()
+                .followRedirects(true)
+                .followSslRedirects(true)
                 .build();
 
-        // GET url
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .header("Accept", "*/*")
-                .GET()
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("Accept", "*/*")
+                .get()
                 .build();
 
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        Response response = client.newCall(request).execute();
 
-        return response.uri();
-
+        return URI.create(response.request().url().toString());
     }
 }

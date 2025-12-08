@@ -151,7 +151,7 @@ public class NrDonationClient implements ClientModInitializer {
             try {
                 URI url = tokenCreate.getLoginUrl();
                 openLoginPage(url);
-            } catch (IOException | InterruptedException e) {
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }

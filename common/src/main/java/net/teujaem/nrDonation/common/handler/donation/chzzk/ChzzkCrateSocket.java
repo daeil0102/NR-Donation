@@ -1,9 +1,8 @@
 package net.teujaem.nrDonation.common.handler.donation.chzzk;
 
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class ChzzkCrateSocket {
 
@@ -11,18 +10,18 @@ public class ChzzkCrateSocket {
 
     public String getUrl(String accessToken) throws Exception {
 
-        HttpClient client = HttpClient.newHttpClient();
+        OkHttpClient client = new OkHttpClient();
 
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL))
-                .header("Authorization", "Bearer " + accessToken)
-                .GET()
+        Request request = new Request.Builder()
+                .url(BASE_URL)
+                .addHeader("Authorization", "Bearer " + accessToken)
+                .get()
                 .build();
 
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        Response response = client.newCall(request).execute();
 
-        if (response.statusCode() == 200) {
-            String body = response.body();
+        if (response.isSuccessful() && response.body() != null) {
+            String body = response.body().string();
 
             // "content" 블록 찾기
             int contentStart = body.indexOf("\"content\"");
@@ -46,8 +45,7 @@ public class ChzzkCrateSocket {
 
             return contentJson.substring(quoteStart + 1, quoteEnd);
         }
+
         return null;
-
     }
-
 }

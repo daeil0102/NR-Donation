@@ -7,6 +7,7 @@ import net.teujaem.nrDonation.common.data.AccessToken;
 import net.teujaem.nrDonation.common.data.LoginPlatform;
 import net.teujaem.nrDonation.common.data.PlatformType;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -17,7 +18,6 @@ import java.nio.charset.StandardCharsets;
 public class CallbackServer {
 
     private static final LoginPlatform loginPlatform = MainAPI.getInstance().getDataClassManager().getLoginPlatform();
-
     private static final AccessToken accessToken = MainAPI.getInstance().getDataClassManager().getAccessToken();
 
     public CallbackServer() throws Exception {
@@ -47,7 +47,7 @@ public class CallbackServer {
 
                     MainAPI.getInstance().eventLogin(platformType);
 
-                    if (platformType.equals(PlatformType.CHZZK)) {
+                    if (PlatformType.CHZZK.equals(platformType)) {
                         try {
                             MainAPI.getInstance().getDataClassManager().getSocketManager().setUrl(platformType);
                         } catch (Exception e) {
@@ -55,7 +55,7 @@ public class CallbackServer {
                         }
                     }
 
-                    if (platformType.equals(PlatformType.SOOP)) {
+                    if (PlatformType.SOOP.equals(platformType)) {
                         try {
                             MainAPI.getInstance().runSoopClient();
                         } catch (InterruptedException e) {
@@ -69,7 +69,6 @@ public class CallbackServer {
         });
 
         server.start();
-
     }
 
     private void openHTML(HttpExchange exchange) {
@@ -83,7 +82,7 @@ public class CallbackServer {
                 return;
             }
 
-            byte[] bytes = is.readAllBytes();
+            byte[] bytes = readAllBytes(is);
             exchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
             exchange.sendResponseHeaders(200, bytes.length);
 
@@ -93,5 +92,15 @@ public class CallbackServer {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private byte[] readAllBytes(InputStream is) throws IOException {
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        byte[] data = new byte[4096];
+        int n;
+        while ((n = is.read(data, 0, data.length)) != -1) {
+            buffer.write(data, 0, n);
+        }
+        return buffer.toByteArray();
     }
 }

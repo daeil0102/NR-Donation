@@ -3,11 +3,9 @@ package net.teujaem.nrDonation.common.handler.donation.soop;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.teujaem.nrDonation.common.util.UrlEncoding;
+import okhttp3.*;
 
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import java.util.HashMap;
 import java.util.Map;
 
 public class SoopCrateAccessToken {
@@ -25,34 +23,35 @@ public class SoopCrateAccessToken {
     public String getAccessToken(String code) throws Exception {
 
         // body setting
-        Map<String, String> map = Map.of(
-                "grant_type", "authorization_code",
-                "client_id", clientId,
-                "client_secret", clientSecret,
-                "redirect_uri", "https://localhost:8080/callback",
-                "code", code,
-                "refresh_token", "null"
-        );
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("grant_type", "authorization_code");
+        map.put("client_id", clientId);
+        map.put("client_secret", clientSecret);
+        map.put("redirect_uri", "https://localhost:8080/callback");
+        map.put("code", code);
+        map.put("refresh_token", "null");
 
         String body = UrlEncoding.toXWwwFormUrl(map);
 
-        HttpClient client = HttpClient.newHttpClient();
+        OkHttpClient client = new OkHttpClient();
+
+        RequestBody requestBody = RequestBody.create(
+                body, MediaType.parse("application/x-www-form-urlencoded")
+        );
 
         // GET token
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL))
-                .header("Content-Type", "application/x-www-form-urlencoded")
-                .header("Accept", "*/*")
-                .POST(HttpRequest.BodyPublishers.ofString(body))
+        Request request = new Request.Builder()
+                .url(BASE_URL)
+                .addHeader("Content-Type", "application/x-www-form-urlencoded")
+                .addHeader("Accept", "*/*")
+                .post(requestBody)
                 .build();
 
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        Response response = client.newCall(request).execute();
 
         ObjectMapper mapper = new ObjectMapper();
-        JsonNode rootNode = mapper.readTree(response.body());
+        JsonNode rootNode = mapper.readTree(response.body().string());
 
         return rootNode.get("access_token").asText(null);
-
     }
-
 }
