@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/fabric/NR-Donation.fabric.main.iml" filepath="$PROJECT_DIR$/.idea/modules/fabric/NR-Donation.fabric.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/fabric/NR-Donation.fabric.test.iml" filepath="$PROJECT_DIR$/.idea/modules/fabric/NR-Donation.fabric.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/forge/NR-Donation.forge.main.iml" filepath="$PROJECT_DIR$/.idea/modules/forge/NR-Donation.forge.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/forge/NR-Donation.forge.test.iml" filepath="$PROJECT_DIR$/.idea/modules/forge/NR-Donation.forge.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/NR-Donation.main.iml" filepath="$PROJECT_DIR$/.idea/modules/NR-Donation.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/plugin/NR-Donation.plugin.main.iml" filepath="$PROJECT_DIR$/.idea/modules/plugin/NR-Donation.plugin.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/NR-Donation.test.iml" filepath="$PROJECT_DIR$/.idea/modules/NR-Donation.test.iml" />

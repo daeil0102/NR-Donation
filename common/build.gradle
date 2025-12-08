@@ -23,7 +23,7 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-core:2.20.1")
 }
 
-Integer gradleJavaVersion = project.java_version as Integer
+Integer gradleJavaVersion = 8
 def targetJavaVersion = gradleJavaVersion
 java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)

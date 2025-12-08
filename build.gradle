@@ -2,6 +2,7 @@ plugins {
     id 'java'
 }
 
+
 allprojects {
     group = "net.teujaem"
 
@@ -10,4 +11,6 @@ allprojects {
         maven { url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
         maven { url = "https://maven.fabricmc.net/" }
     }
+
+    ext.description = "\\n치지직, 숲 OpenAPI를 이용한 마인크래프트 후원 연동 모드\\n\\nCopyright (c) 2025 NR STUDIO\\n\\n1. 상업적 이용이 가능합니다.\\n2. 2차 수정이 불가능 합니다. (fork 포함)\\n3. 2차 배포가 불가능 합니다.\\n  예외사항:\\n    런쳐나, 패치기 같은 형태로는 2차 배포가 가능합니다."
 }

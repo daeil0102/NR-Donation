@@ -1,0 +1,15 @@
+[
+    {
+        "modid": "nr-donation",
+        "name": "NR-Donation",
+        "description": "${description}",
+        "version": "${version}",
+        "mcversion": "${minecraft_version}",
+        "url": "",
+        "updateUrl": "",
+        "authorList": ["${mod_authors}"],
+        "logoFile": "",
+        "screenshots": [],
+        "dependencies": []
+    }
+]

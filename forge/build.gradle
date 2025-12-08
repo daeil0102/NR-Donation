@@ -5,17 +5,16 @@ plugins {
 }
 
 base {
-    archivesBaseName = "${project.rootProject.name}"
-    version = "${project.version}-forge+mc${project.minecraft_version}"
+    archivesName = "${project.rootProject.name}"
+    version = "${project.version}-forge+mc${project.forge_mc_version}"
 }
 
 java {
-    toolchain.languageVersion = JavaLanguageVersion.of(project.java_version)
+    toolchain.languageVersion = JavaLanguageVersion.of(project.forge_java_version)
 }
 
 minecraft {
-    mappings channel: mapping_channel, version: project.minecraft_version
-    reobf = false
+    mappings channel: mapping_channel, version: mapping_version
     copyIdeResources = true
     runs {
         configureEach {
@@ -52,22 +51,23 @@ repositories {
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    minecraft "net.minecraftforge:forge:${forge_mc_version}-${forge_version}"
     implementation('net.sf.jopt-simple:jopt-simple:5.0.4') { version { strictly '5.0.4' } }
     implementation(project(":common"))
     implementation("org.yaml:snakeyaml:2.5")
 }
 
 tasks.named('processResources', ProcessResources).configure {
-    var replaceProperties = [minecraft_version   : minecraft_version, minecraft_version_range: minecraft_version_range,
+    var replaceProperties = [minecraft_version   : forge_mc_version, minecraft_version_range: minecraft_version_range,
                              forge_version       : forge_version, forge_version_range: forge_version_range,
                              loader_version_range: loader_version_range,
                              mod_id              : project.rootProject.name, mod_name: project.rootProject.name, mod_license: mod_license, mod_version: project.version,
-                             mod_authors         : mod_authors, mod_description: mod_description,]
+                             mod_authors         : mod_authors, mod_description: mod_description,
+                             description         : project.ext.description, version: version]
 
     inputs.properties replaceProperties
 
-    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
+    filesMatching(['mcmod.info']) {
         expand replaceProperties + [project: project]
     }
 }
@@ -82,6 +82,7 @@ tasks.named('jar', Jar).configure {
                     "Implementation-Vendor"   : mod_authors,
                     "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")])
     }
+    finalizedBy 'reobfJar'
 }
 
 tasks.withType(JavaCompile).configureEach {
