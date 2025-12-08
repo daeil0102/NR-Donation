@@ -106,7 +106,6 @@ tasks.named('jar', Jar).configure {
     finalizedBy 'reobfJar'
 }
 
-// ForgeGradle 기본 reobf 비활성화 (1.12.2에서 동작 안함)
 reobf {
     create('shadowJar')
 }
