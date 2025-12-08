@@ -12,7 +12,7 @@
     </facet>
   </component>
   <component name="McpModuleSettings">
-    <option name="mappingFile" value="C:\Users\entry\Projects\java\NR-Donation\forge\build\createMcpToSrg\output.tsrg" />
+    <option name="mappingFile" value="D:\인텔리제이\NR-Donation\forge\build\createMcpToSrg\output.tsrg" />
     <option name="mcpVersion" value="snapshot_20171003-1.12" />
     <option name="minecraftVersion" value="1.12.2" />
     <option name="platformVersion" value="14.23.5.2864" />

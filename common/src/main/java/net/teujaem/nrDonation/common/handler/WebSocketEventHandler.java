@@ -23,10 +23,18 @@ public class WebSocketEventHandler {
 
         if (event.equals("put.apiKey")) {
             if (messages[1].equals("soop")) {
+                if (messages[2] == null) return;
+                if (messages[3] == null) return;
+                if (messages[2].isEmpty()) return;
+                if (messages[3].isEmpty()) return;
                 MainAPI.getInstance().getDataClassManager().getApiKey().setId(PlatformType.SOOP, messages[2]);
                 MainAPI.getInstance().getDataClassManager().getApiKey().setSecret(PlatformType.SOOP, messages[3]);
             }
             if (messages[1].equals("chzzk")) {
+                if (messages[2] == null) return;
+                if (messages[3] == null) return;
+                if (messages[2].isEmpty()) return;
+                if (messages[3].isEmpty()) return;
                 MainAPI.getInstance().getDataClassManager().getApiKey().setId(PlatformType.CHZZK, messages[2]);
                 MainAPI.getInstance().getDataClassManager().getApiKey().setSecret(PlatformType.CHZZK, messages[3]);
             }
@@ -34,6 +42,8 @@ public class WebSocketEventHandler {
 
         if (event.equals("put.apiServer")) {
             if (messages[1].equals("soop")) {
+                if (messages[2] == null) return;
+                if (messages[2].isEmpty()) return;
                 MainAPI.getInstance().getDataClassManager().getNodeJSUrl().setURL(messages[2]);
             }
         }
