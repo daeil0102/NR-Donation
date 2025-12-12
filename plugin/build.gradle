@@ -27,7 +27,7 @@ processResources {
 
 base {
     archivesBaseName = "${project.rootProject.name}"
-    version = "${project.version}-spigot"
+    version = "${project.version}-spigot+mc${project.spigot_api_version}+"
 }
 
 def targetJavaVersion = 21

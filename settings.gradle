@@ -13,6 +13,12 @@ pluginManagement {
 }
 
 rootProject.name = 'NR-Donation'
+
+// 기본
 include("plugin", "common", "fabric", "forge", "neoforge")
+
+// 1.12.2는 패브릭이 없어서 버전 내릴 때 사용
 //include("plugin", "common", "forge")
+
+// 마인크래프트와 상관없이 메인 시스템만 수정할 때 사용
 //include("common")
