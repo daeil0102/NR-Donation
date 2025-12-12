@@ -13,6 +13,7 @@ Copyright (c) 2025 NR STUDIO
 <h2>도움 주신 분</h2>
 
 - 아포칼립스 (유튜브 및 투네이션)
+- Entry (1.12.2 forge)
 
 <h2>디스코드</h2>
 https://discord.gg/yTC9YJSmt5
