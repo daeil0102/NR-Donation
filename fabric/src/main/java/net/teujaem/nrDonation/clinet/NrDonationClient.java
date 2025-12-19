@@ -30,6 +30,8 @@ public class NrDonationClient implements ClientModInitializer {
     private static MainAPI mainAPI;
     private static EventManager eventManager;
 
+    private static boolean isJoined = false;
+
     @Override
     public void onInitializeClient() {
         instance = this;
@@ -50,6 +52,12 @@ public class NrDonationClient implements ClientModInitializer {
 
         //서버 접속시 메인 시스템 연결 (player null 방지용)
         ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
+
+            if (isJoined) {
+                return;
+            }
+
+            isJoined = true;
 
             mainAPI = new MainAPI(MinecraftClient.getInstance().player.getName().getString());
 
