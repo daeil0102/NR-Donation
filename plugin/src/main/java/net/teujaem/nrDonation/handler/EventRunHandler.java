@@ -107,6 +107,7 @@ public class EventRunHandler {
             String eventType = messages[2];
             String flatform = messages[3];
             Player player = Bukkit.getPlayer(id);
+            if (player == null) return;
             if (eventType.equals("donation")) {
                 String sender = messages[4];
                 int amount = Integer.parseInt(messages[5]);
