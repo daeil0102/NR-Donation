@@ -249,6 +249,7 @@ public class EventRunHandler {
         }
 
         Player player = Bukkit.getPlayer(application.getKeyUser(ws));
+        if (player == null || !player.isOnline()) return;
         onSessionSet(player);
 
     }
