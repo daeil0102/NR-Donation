@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.java_websocket.WebSocket;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class EventRunHandler {
@@ -255,7 +256,7 @@ public class EventRunHandler {
     }
 
     private boolean isEventType(String type) {
-        List<String> list = List.of(
+        List<String> list = Arrays.asList(
                 "donation",
                 "chat",
                 "login",

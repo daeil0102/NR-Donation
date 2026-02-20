@@ -10,6 +10,8 @@ import net.teujaem.nrDonation.common.data.soop.NodeJSUrl;
 import net.teujaem.nrDonation.common.data.soop.doantion.DonationList;
 import net.teujaem.nrDonation.common.lisener.ChzzkClient;
 import net.teujaem.nrDonation.common.lisener.SoopClient;
+import net.teujaem.nrDonation.common.lisener.ToonationClient;
+import net.teujaem.nrDonation.common.lisener.YoutubeClient;
 import net.teujaem.nrDonation.common.websocket.MCWebSocketClient;
 
 import java.io.IOException;
@@ -26,6 +28,8 @@ public class DataClassManager {
     private static AccessToken accessToken;
     private static SocketManager socketManager;
     private static ChzzkClient chzzkClient;
+    private static YoutubeClient youtubeClient;
+    private static ToonationClient toonationClient;
     private static SoopClient soopClient;
     private static MCWebSocketClient mcWebSocketClient;
     private static APIKey apiKey;
@@ -99,13 +103,24 @@ public class DataClassManager {
 
     public void crateChzzkClient(String url) {
         chzzkClient = new ChzzkClient();
-        chzzkClient.connect(url);
+        chzzkClient.run(url);
     }
 
     public void crateSoopClient() throws IOException, InterruptedException {
         soopClient = new SoopClient();
         soopClient.run();
     }
+
+    public void crateYoutubeClient(String url) {
+        url = url.replace("https://www.youtube.com/watch?v=", "");
+        youtubeClient = new YoutubeClient(url, configManager.getYoutubeAPI());
+    }
+
+    public void crateToonationClient(String url) {
+        url = url.replace("https://toon.at/widget/alertbox/", "");
+        toonationClient = new ToonationClient(url);
+    }
+
 
     public void crateMcWebSocketClient() {
         try {

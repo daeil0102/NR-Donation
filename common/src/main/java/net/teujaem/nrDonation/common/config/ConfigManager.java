@@ -6,6 +6,11 @@ public class ConfigManager {
     private int port;
     private boolean donation;
     private boolean chat;
+    private String youtubeUrl;
+    private String toonationUrl;
+    private String youtubeAPI;
+    private String weflabUrl;
+
 
     public String getIp() {
         return ip;
@@ -23,6 +28,22 @@ public class ConfigManager {
         return chat;
     }
 
+    public String getYoutubeUrl() {
+        return youtubeUrl;
+    }
+
+    public String getToonationUrl() {
+        return toonationUrl;
+    }
+
+    public String getYoutubeAPI() {
+        return youtubeAPI;
+    }
+
+    public String getWeflabUrl() {
+        return weflabUrl;
+    }
+
     public void setIp(String ip) {
         this.ip = ip;
     }
@@ -37,5 +58,21 @@ public class ConfigManager {
 
     public void setChat(boolean chat) {
         this.chat = chat;
+    }
+
+    public void setYoutubeUrl(String youtubeUrl) {
+        this.youtubeUrl = youtubeUrl;
+    }
+
+    public void setToonationUrl(String toonationUrl) {
+        this.toonationUrl = toonationUrl;
+    }
+
+    public void setYoutubeAPI(String youtubeAPI) {
+        this.youtubeAPI = youtubeAPI;
+    }
+
+    public void setWeflabUrl(String weflabUrl) {
+        this.weflabUrl = weflabUrl;
     }
 }

@@ -6,27 +6,34 @@ base {
     archivesName = "${project.rootProject.name}"
 }
 
+repositories {
+    mavenLocal()
+}
+
 jar {
     archiveClassifier = "api"
 }
 
 dependencies {
-    implementation("com.google.code.gson:gson:2.10.1")
-    implementation("org.java-websocket:Java-WebSocket:1.5.6")
-    implementation("io.socket:socket.io-client:1.0.0")
-    implementation("io.socket:engine.io-client:1.0.0")
-    implementation("org.json:json:20240303")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.20")
-    implementation("com.squareup.okio:okio:3.3.0")
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("com.squareup.okhttp3:okhttp-sse:4.12.0")
-    implementation("org.yaml:snakeyaml:2.5")
-    implementation("com.fasterxml.jackson.core:jackson-annotations:2.20")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.20.1")
-    implementation("com.fasterxml.jackson.core:jackson-core:2.20.1")
+    implementation(libs.gson.get())
+    implementation(libs.java.websocket.get())
+    implementation(libs.socket.io.client.get())
+    implementation(libs.engine.io.client.get())
+    implementation(libs.json.get())
+    implementation(libs.kotlin.stdlib.get())
+    implementation(libs.okio.get())
+    implementation(libs.okhttp.get())
+    implementation(libs.okhttpSse.get())
+    implementation(libs.snakeyaml.get())
+    implementation(libs.jackson.annotations.get())
+    implementation(libs.jackson.databind.get())
+    implementation(libs.jackson.core.get())
+    implementation(libs.uliv.get())
+    implementation(libs.tooliv.get())
+    implementation(libs.wfliv.get())
 }
 
-Integer gradleJavaVersion = 8
+Integer gradleJavaVersion = project.java_version as Integer
 def targetJavaVersion = gradleJavaVersion
 java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)

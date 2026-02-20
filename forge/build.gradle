@@ -48,6 +48,7 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
@@ -69,6 +70,8 @@ dependencies {
     shadow(libs.jackson.databind)
     shadow(libs.jackson.core)
     shadow(project(":common"))
+    shadow(libs.uliv.get())
+    shadow(libs.tooliv.get())
 }
 
 tasks.shadowJar {

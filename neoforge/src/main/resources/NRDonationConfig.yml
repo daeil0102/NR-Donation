@@ -1,0 +1,13 @@
+#
+# 실제 마인크래프트 서버가 아닌, 후원 연동을 위한 서버
+#
+Server:
+  ip: "0.0.0.0"
+  port: 8888
+
+#
+# 이벤트 화이트리스트 기능
+#
+SendEvent:
+  donation: true
+  chat: true

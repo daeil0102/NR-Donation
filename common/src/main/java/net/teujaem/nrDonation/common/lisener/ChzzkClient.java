@@ -18,7 +18,7 @@ public class ChzzkClient {
     private final ObjectMapper mapper = new ObjectMapper();
     private final ConfigManager configManager = MainAPI.getInstance().getDataClassManager().getConfigManager();
 
-    public void connect(String sessionUrl) {
+    public void run(String sessionUrl) {
 
         new Thread(() -> {
             try {

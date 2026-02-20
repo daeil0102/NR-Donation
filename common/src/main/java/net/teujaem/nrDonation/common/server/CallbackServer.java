@@ -45,11 +45,16 @@ public class CallbackServer {
 
                     accessToken.setAccessToken(platformType, code[0]);
 
+                    System.out.println("1");
+
                     MainAPI.getInstance().eventLogin(platformType);
+
+                    System.out.println("2");
 
                     if (PlatformType.CHZZK.equals(platformType)) {
                         try {
                             MainAPI.getInstance().getDataClassManager().getSocketManager().setUrl(platformType);
+                            System.out.println("3");
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }

@@ -39,6 +39,14 @@ public class MainAPI {
         dataClassManager.crateSoopClient();
     }
 
+    public void runYoutubeClient() {
+        dataClassManager.crateYoutubeClient(dataClassManager.getConfigManager().getYoutubeUrl());;
+    }
+
+    public void runToonationClient() {
+        dataClassManager.crateToonationClient(dataClassManager.getConfigManager().getToonationUrl());
+    }
+
     public void resetLoginPlatform() {
         dataClassManager.getLoginPlatform().setPlatformType(null);
     }

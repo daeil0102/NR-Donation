@@ -32,6 +32,10 @@ public class NrDonationClient implements ClientModInitializer {
 
     private static boolean isJoined = false;
 
+    private boolean isYoutubeLogin = false;
+    private boolean isToonationLogin = false;
+    private boolean isWeflaboLogin = false;
+
     @Override
     public void onInitializeClient() {
         instance = this;
@@ -69,7 +73,9 @@ public class NrDonationClient implements ClientModInitializer {
                 String event = messages[0];
                 String platform = messages[1];
                 if (event.equals("login")) {
-                    messageHandler.loginSuccess();
+                    MinecraftClient.getInstance().execute(() -> {
+                        messageHandler.loginSuccess();
+                    });
                     MCWebSocketSendMessage mcWebSocketSendMessage = new MCWebSocketSendMessage();
                     mcWebSocketSendMessage.to("event//login//" + platform);
                 }
@@ -136,8 +142,29 @@ public class NrDonationClient implements ClientModInitializer {
                     return 1;
                 }))
             );
+
+            dispatcher.register(literal("연결")
+                .then(literal("유튜브").executes(ctx -> {
+                    login(PlatformType.YOUTUBE);
+                    return 1;
+                }))
+                .then(literal("투네이션").executes(ctx -> {
+                    login(PlatformType.TOONATION);
+                    return 1;
+                }))
+                .then(literal("위플랩").executes(ctx -> {
+                    login(PlatformType.WEFLAB);
+                    return 1;
+                }))
+            );
         });
 
+    }
+
+    //로그인 페이지 열기
+    private void openLoginPage(URI url) {
+        messageHandler.loginAttempt(url);
+        Util.getOperatingSystem().open(url);
     }
 
     /*
@@ -149,11 +176,11 @@ public class NrDonationClient implements ClientModInitializer {
 
     //로그인 시도
     private void login(PlatformType platformType) {
-        if (platformType.equals(PlatformType.SOOP)) {
-            if (isLoginReturnType(PlatformType.SOOP)) {
-                return;
-            }
+        if (isLoginReturnType(platformType)) {
+            return;
+        }
 
+        if (platformType.equals(PlatformType.SOOP)) {
             SoopCreateCode tokenCreate = new SoopCreateCode(dataClassManager.getApiKey().getId(PlatformType.SOOP));
             dataClassManager.getLoginPlatform().setPlatformType(PlatformType.SOOP);
             try {
@@ -165,15 +192,47 @@ public class NrDonationClient implements ClientModInitializer {
         }
 
         if (platformType.equals(PlatformType.CHZZK)) {
-            if (isLoginReturnType(PlatformType.CHZZK)) {
-                return;
-            }
-
             ChzzkCreateCode tokenCreate = new ChzzkCreateCode(dataClassManager.getApiKey().getId(PlatformType.CHZZK));
             dataClassManager.getLoginPlatform().setPlatformType(PlatformType.CHZZK);
             URI url = tokenCreate.getLoginUrl();
             openLoginPage(url);
         }
+
+        if (platformType.equals(PlatformType.YOUTUBE)) {
+            mainAPI.runYoutubeClient();
+            isYoutubeLogin = true;
+            messageHandler.loginSuccess();
+        }
+
+        if (platformType.equals(PlatformType.TOONATION)) {
+            mainAPI.runToonationClient();
+            isToonationLogin = true;
+            messageHandler.loginSuccess();
+        }
+
+        if (platformType.equals(PlatformType.WEFLAB)) {
+            isWeflaboLogin = true;
+            messageHandler.loginSuccess();
+        }
+    }
+
+    // 유튜브/투네이션 url 존재 여부
+    private boolean isEmptyUrl(PlatformType platformType) {
+        if (platformType.equals(PlatformType.YOUTUBE)) {
+            if (mainAPI.getDataClassManager().getConfigManager().getYoutubeUrl() == null) return true;
+            if (mainAPI.getDataClassManager().getConfigManager().getYoutubeUrl().isEmpty()) return true;
+            if (mainAPI.getDataClassManager().getConfigManager().getYoutubeAPI() == null) return true;
+            if (mainAPI.getDataClassManager().getConfigManager().getYoutubeAPI().isEmpty()) return true;
+        }
+        if (platformType.equals(PlatformType.TOONATION)) {
+            if (mainAPI.getDataClassManager().getConfigManager().getToonationUrl() == null) return true;
+            if (mainAPI.getDataClassManager().getConfigManager().getToonationUrl().isEmpty()) return true;
+        }
+        if (platformType.equals(PlatformType.WEFLAB)) {
+            if (mainAPI.getDataClassManager().getConfigManager().getWeflabUrl() == null) return true;
+            if (mainAPI.getDataClassManager().getConfigManager().getWeflabUrl().isEmpty()) return true;
+        }
+        return false;
     }
 
     //로그아웃 시도
@@ -213,10 +272,19 @@ public class NrDonationClient implements ClientModInitializer {
             messageHandler.loginTrying();
             return true;
         }
-        if (isEmptyAPI(platformType)) {
-            messageHandler.emptyAPI();
-            return true;
+
+        if (platformType.equals(PlatformType.SOOP)||platformType.equals(PlatformType.CHZZK)) {
+            if (isEmptyAPI(platformType)) {
+                messageHandler.emptyAPI();
+                return true;
+            }
+        } else {
+            if (isEmptyUrl(platformType)) {
+                messageHandler.emptyUrl();
+            }
         }
+
+
         if (platformType.equals(PlatformType.SOOP)) {
             if (isEmptyNodeJSUrl()) {
                 messageHandler.emptyNodeJSUrl();
@@ -249,13 +317,16 @@ public class NrDonationClient implements ClientModInitializer {
         if (platformType.equals(PlatformType.CHZZK)) {
             return dataClassManager.getAccessToken().getChzzk() != null;
         }
+        if (platformType.equals(PlatformType.YOUTUBE)) {
+            return isYoutubeLogin;
+        }
+        if (platformType.equals(PlatformType.TOONATION)) {
+            return isToonationLogin;
+        }
+        if (platformType.equals(PlatformType.WEFLAB)) {
+            return isWeflaboLogin;
+        }
         return false;
-    }
-
-    //로그인 페이지 열기
-    private void openLoginPage(URI url) {
-        messageHandler.loginAttempt(url);
-        Util.getOperatingSystem().open(url);
     }
 
 }

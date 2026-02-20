@@ -4,5 +4,8 @@ public enum PlatformType {
 
     SOOP,
     CHZZK,
+    YOUTUBE,
+    TOONATION,
+    WEFLAB
 
 }

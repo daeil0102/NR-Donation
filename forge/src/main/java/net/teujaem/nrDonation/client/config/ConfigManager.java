@@ -19,6 +19,10 @@ public class ConfigManager {
     private int port;
     private boolean sendDonation;
     private boolean sendChat;
+    private String youtubeUrl;
+    private String toonationUrl;
+    private String weflabUrl;
+    private String youtubeAPI;
     private static final String FILE_NAME = "NRDonationConfig.yml";
 
     public ConfigManager() {
@@ -81,6 +85,25 @@ public class ConfigManager {
                 this.sendDonation = true;
                 this.sendChat = true;
             }
+
+            Map<String, Object> urlConfig = (Map)this.configValues.get("Url");
+            if (urlConfig != null) {
+                this.youtubeUrl = urlConfig.getOrDefault("youtube", "").toString();
+                this.toonationUrl = urlConfig.getOrDefault("toonation", "").toString();
+                this.weflabUrl = urlConfig.getOrDefault("weflab", "").toString();
+            } else {
+                this.youtubeUrl = "";
+                this.toonationUrl = "";
+                this.weflabUrl = "";
+            }
+
+            Map<String, Object> apiConfig = (Map)this.configValues.get("API");
+            if (apiConfig != null) {
+                this.youtubeAPI = apiConfig.getOrDefault("youtube", "").toString();
+            } else {
+                this.youtubeAPI = "";
+            }
+
         } catch (IOException e) {
             NrDonation.getLogger().log(Level.WARN, "Error while reading NRDonationConfig.yml!");
         }
@@ -89,5 +112,10 @@ public class ConfigManager {
         NrDonationClient.getInstance().getMainAPI().getDataClassManager().getConfigManager().setPort(this.port);
         NrDonationClient.getInstance().getMainAPI().getDataClassManager().getConfigManager().setDonation(this.sendDonation);
         NrDonationClient.getInstance().getMainAPI().getDataClassManager().getConfigManager().setChat(this.sendChat);
+        NrDonationClient.getInstance().getMainAPI().getDataClassManager().getConfigManager().setYoutubeUrl(this.youtubeUrl);
+        NrDonationClient.getInstance().getMainAPI().getDataClassManager().getConfigManager().setToonationUrl(this.toonationUrl);
+        NrDonationClient.getInstance().getMainAPI().getDataClassManager().getConfigManager().setWeflabUrl(this.weflabUrl);
+        NrDonationClient.getInstance().getMainAPI().getDataClassManager().getConfigManager().setYoutubeAPI(this.youtubeAPI);
+
     }
 }

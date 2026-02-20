@@ -1,15 +1,16 @@
 plugins {
-    id 'fabric-loom' version '1.11-SNAPSHOT'
+    id 'fabric-loom' version '1.15-SNAPSHOT'
     id 'maven-publish'
 }
 
 base {
-    archivesBaseName = "${project.rootProject.name}"
+    archivesName.set("${project.rootProject.name}")
     version = "${project.version}-fabric+mc${project.minecraft_version}"
 }
 
 repositories {
     mavenCentral()
+    mavenLocal()
     maven { url = "https://maven.fabricmc.net/" }
     maven { url = "https://api.modrinth.com/maven" }
 }
@@ -35,7 +36,14 @@ dependencies {
     implementation(include(libs.jackson.annotations.get()))
     implementation(include(libs.jackson.databind.get()))
     implementation(include(libs.jackson.core.get()))
+    implementation(include(libs.reactivex.get()))
+    implementation(include(libs.playwright.get()))
+    implementation(include(libs.selenium.java.get()))
+    implementation(include(libs.selenium.api.get()))
+    implementation(include(libs.jsoup.get()))
+    implementation(include(libs.reactivestreams.get()))
     implementation(include(project(":common")))
+    implementation(include(libs.tooliv.get()))
 }
 
 processResources {

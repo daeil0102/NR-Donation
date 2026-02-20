@@ -1,0 +1,24 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+license = "Custom"
+
+[[mods]]
+    modId = "nr_donation"
+    version = "${mod_version}"
+    displayName = "${mod_name}"
+    description = '''${mod_description}'''
+    authors = "${mod_authors}"
+
+[[dependencies.nr_donation]]
+    modId = "neoforge"
+    type = "required"
+    versionRange = "[21.1,)"
+    ordering = "NONE"
+    side = "CLIENT"
+
+[[dependencies.nr_donation]]
+    modId = "minecraft"
+    type = "required"
+    versionRange = "[${mc_version},)"
+    ordering = "NONE"
+    side = "CLIENT"

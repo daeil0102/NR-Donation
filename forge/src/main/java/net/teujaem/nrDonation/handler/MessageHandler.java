@@ -64,4 +64,7 @@ public class MessageHandler {
         sendMessage("&c이미 로그아웃되어 있습니다.");
     }
 
+    public void emptyUrl() {
+        sendMessage("&cUrl 또는 유튜브 API Key가 Config에 없습니다.");
+    }
 }

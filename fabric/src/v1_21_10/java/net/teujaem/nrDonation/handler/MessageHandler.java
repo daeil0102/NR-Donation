@@ -57,4 +57,9 @@ public class MessageHandler {
                         );
         player.sendMessage(message, false);
     }
+
+    public void emptyUrl() {
+        player.sendMessage(TextColorFormatter.toColoredText(messagePrefix + "&cUrl 또는 유튜브 API Key가 Config에 없습니다."), false);
+    }
+
 }

@@ -8,6 +8,10 @@ pluginManagement {
             name = 'MinecraftForge'
             url = 'https://maven.minecraftforge.net/'
         }
+        maven {
+            name = 'NeoForged'
+            url = 'https://maven.neoforged.net/releases'
+        }
         gradlePluginPortal()
     }
 }
@@ -15,10 +19,16 @@ pluginManagement {
 rootProject.name = 'NR-Donation'
 
 // 기본
-include("plugin", "common", "fabric", "forge", "neoforge")
+// include("plugin", "common", "fabric", "forge", "neoforge", "tooLiv")
 
 // 1.12.2는 패브릭이 없어서 버전 내릴 때 사용
-//include("plugin", "common", "forge")
+// include("plugin", "common", "forge", "tooLiv")
+
+// 패브릭용
+include("plugin", "common", "fabric", "tooLiv")
+
+// 네오포지용
+// include("plugin", "common", "neoforge", "tooLiv")
 
 // 마인크래프트와 상관없이 메인 시스템만 수정할 때 사용
-//include("common")
+// include("common")

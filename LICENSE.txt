@@ -1,4 +1,4 @@
-Copyright (c) 2025 NR STUDIO
+Copyright (c) 2025 Teujaem
 
 1. 상업적 이용이 가능합니다.
 2. 2차 수정이 불가능 합니다. (fork 포함)

@@ -1,10 +1,10 @@
 #
-# type is "main" or "sub"
-# if only one minecraft server, type is "main"
+# type은 "main" or "sub"중 하나만 선택 해주세요
+# 서버가 하나일 경우, "main"을 입력해주세요
 #
 Server:
   type: "main"
-  host: "127.0.0.1"
+  host: "0.0.0.0"
   port: 8888
 
 #

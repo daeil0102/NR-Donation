@@ -1,0 +1,110 @@
+plugins {
+    id 'eclipse'
+    id 'idea'
+    id 'net.neoforged.moddev' version '2.0.140'
+    alias(libs.plugins.shadow)
+}
+
+base {
+    archivesName = "${project.rootProject.name}"
+    version = "${project.version}-neoforge+mc${project.neoforge_mc_version}"
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+}
+
+neoForge {
+    version = project.neoforge_version
+
+    runs {
+        configureEach {
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+
+        client {
+            client()
+        }
+
+        server {
+            server()
+            programArguments.addAll '--nogui'
+        }
+    }
+
+    mods {
+        "nr_donation" {
+            sourceSet(sourceSets.main)
+            sourceSet(project(":common").sourceSets.main)  // ← 추가
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+configurations {
+    shadow
+    implementation.extendsFrom(shadow)
+}
+
+dependencies {
+    // ===== 외부 라이브러리 =====
+    shadow(libs.gson)
+    shadow(libs.java.websocket)
+    shadow(libs.socket.io.client)
+    shadow(libs.engine.io.client)
+    shadow(libs.json)
+    shadow(libs.kotlin.stdlib)
+    shadow(libs.okio)
+    shadow(libs.okhttp)
+    shadow(libs.okhttpSse)
+    shadow(libs.snakeyaml)
+    shadow(libs.jackson.annotations)
+    shadow(libs.jackson.databind)
+    shadow(libs.jackson.core)
+    shadow(libs.reactivex.get())
+    shadow(libs.playwright.get())
+    shadow(libs.selenium.java.get())
+    shadow(libs.selenium.api.get())
+    shadow(libs.jsoup.get())
+    shadow(libs.reactivestreams.get())
+    shadow(project(":common"))
+    implementation(project(":common"))
+    shadow(libs.tooliv.get())
+}
+
+tasks.shadowJar {
+    configurations = [project.configurations.shadow]
+    archiveClassifier = ''
+    exclude('META-INF/services/**')
+    relocate("org.slf4j", "shadow.slf4j")
+    mergeServiceFiles()
+}
+
+tasks.named('processResources', ProcessResources).configure {
+    var replaceProperties = [
+            mod_id          : "nr_donation",
+            mod_name        : project.rootProject.name,
+            mod_version     : project.version,
+            mod_authors     : "Teujaem",
+            mod_description : project.ext.description,
+            mc_version      : project.neoforge_mc_version,
+            neoforge_version: project.neoforge_version
+    ]
+
+    inputs.properties replaceProperties
+
+    filesMatching(['META-INF/neoforge.mods.toml']) {
+        expand replaceProperties + [project: project]
+    }
+}
+
+assemble.dependsOn(shadowJar)
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release.set(21)
+}

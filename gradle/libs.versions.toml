@@ -11,7 +11,16 @@ snakeyaml = "2.5"
 jackson-annotations = "2.20"
 jackson-databind = "2.20.1"
 jackson-core = "2.20.1"
+reactivex = "3.1.10"
+playwright = "1.57.0"
+selenium-java = "4.18.1"
+selenium-api = "4.18.1"
+jsoup = "1.15.3"
+reactivestreams = "1.0.4"
 shadow = "9.2.2"
+uliv = "1.0.0"
+tooliv = "1.0.0"
+wfliv = "1.0.0"
 
 [libraries]
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
@@ -27,6 +36,15 @@ snakeyaml = { module = "org.yaml:snakeyaml", version.ref = "snakeyaml" }
 jackson-annotations = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jackson-annotations" }
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson-databind" }
 jackson-core = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jackson-core" }
+reactivex = { module = "io.reactivex.rxjava3:rxjava", version.ref = "reactivex" }
+playwright = { module = "com.microsoft.playwright:playwright", version.ref = "playwright" }
+selenium-java = { module = "org.seleniumhq.selenium:selenium-java", version.ref = "selenium-java" }
+selenium-api = { module = "org.seleniumhq.selenium:selenium-api", version.ref = "selenium-api" }
+jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
+reactivestreams = { module = "org.reactivestreams:reactive-streams", version.ref = "reactivestreams" }
+uliv = { module = "net.teujaem:uLiv", version.ref = "uliv" }
+tooliv = { module = "net.teujaem:tooLiv", version.ref = "tooliv" }
+wfliv = { module = "net.teujaem:wfLiv", version.ref = "tooliv" }
 
 [plugins]
 shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
