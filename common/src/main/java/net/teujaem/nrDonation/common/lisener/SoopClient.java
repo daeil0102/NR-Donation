@@ -77,7 +77,10 @@ public class SoopClient {
                         onChat(node);
                     }
                     if (action.equals("BALLOON_GIFTED")) {
-                        onDonation(node);
+                        onDonation(node, SoopDonationType.NORMAL);
+                    }
+                    if (action.equals("VIDEOBALLOON_GIFTED")) {
+                        onDonation(node, SoopDonationType.VIDEO);
                     }
 
                 }
@@ -97,10 +100,16 @@ public class SoopClient {
         return latch;
     }
 
-    private static void onDonation(JsonNode node) {
+    private static void onDonation(JsonNode node, SoopDonationType donationType) {
         String nickname = node.path("userNickname").asText();
         int count = node.path("count").asInt();
         System.out.println("[Soop Donation] " + nickname + ": " + count);
+
+        if (donationType.equals(SoopDonationType.VIDEO)) {
+            MCWebSocketSendMessage mcWebSocketSendMessage = new MCWebSocketSendMessage();
+            mcWebSocketSendMessage.to("event//donation//soop//" + nickname + "//" + donationList.getFirstCountOf(nickname) + "//null");
+            return;
+        }
 
         donationList.addDonation(nickname, count);
     }

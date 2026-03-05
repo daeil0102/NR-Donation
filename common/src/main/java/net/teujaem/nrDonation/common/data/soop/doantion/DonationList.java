@@ -5,13 +5,14 @@ import net.teujaem.nrDonation.common.websocket.sender.MCWebSocketSendMessage;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class DonationList {
 
     private static class Donation {
-        public final String sender;
-        public int count;
+        private final String sender;
+        private final int count;
 
         public Donation(String sender, int count) {
             this.sender = sender;
@@ -19,35 +20,40 @@ public class DonationList {
         }
     }
 
-    private final List<Donation> donations = new CopyOnWriteArrayList<>();
+    private final ScheduledExecutorService scheduler =
+            Executors.newSingleThreadScheduledExecutor();
 
-    public DonationList() {
-
-        Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(() -> {
-            if (donations.isEmpty()) return;
-
-            // List에서 첫 번째 요소 가져오기
-            Donation first = donations.get(0);
-
-            String sender = first.sender;
-            int count = first.count;
-
-            MCWebSocketSendMessage mcWebSocketSendMessage = new MCWebSocketSendMessage();
-            mcWebSocketSendMessage.to("event//donation//soop//" + sender + "//" + count + "//null");
-
-            // 첫 번째 요소 제거
-            donations.remove(0);
-
-        }, 100, 100, TimeUnit.MILLISECONDS);
-    }
-
+    // 현재 대기중인 donation 목록
+    private final List<Donation> pendingDonations =
+            new CopyOnWriteArrayList<>();
 
     public void addDonation(String sender, int count) {
-        donations.add(new Donation(sender, count));
+
+        Donation donation = new Donation(sender, count);
+        pendingDonations.add(donation);
+
+        // 300ms
+        scheduler.schedule(() -> {
+
+            // 이미 제거됐으면 무시
+            if (!pendingDonations.remove(donation)) {
+                return;
+            }
+
+            MCWebSocketSendMessage mcWebSocketSendMessage =
+                    new MCWebSocketSendMessage();
+
+            mcWebSocketSendMessage.to(
+                    "event//donation//soop//"
+                            + donation.sender + "//"
+                            + donation.count + "//null"
+            );
+
+        }, 300, TimeUnit.MILLISECONDS);
     }
 
     public boolean hasSender(String sender) {
-        for (Donation donation : donations) {
+        for (Donation donation : pendingDonations) {
             if (donation.sender.equalsIgnoreCase(sender)) {
                 return true;
             }
@@ -55,19 +61,17 @@ public class DonationList {
         return false;
     }
 
-    // sender의 첫번재 값 제거
     public void removeFirstOf(String sender) {
-        for (Donation donation : donations) {
+        for (Donation donation : pendingDonations) {
             if (donation.sender.equalsIgnoreCase(sender)) {
-                donations.remove(donation);
+                pendingDonations.remove(donation);
                 break;
             }
         }
     }
 
-    // sender의 첫번째 값 확인
     public int getFirstCountOf(String sender) {
-        for (Donation donation : donations) {
+        for (Donation donation : pendingDonations) {
             if (donation.sender.equalsIgnoreCase(sender)) {
                 return donation.count;
             }
