@@ -2,7 +2,7 @@
 # 실제 마인크래프트 서버가 아닌, 후원 연동을 위한 서버
 #
 Server:
-  ip: "0.0.0.0"
+  ip: "127.0.0.1"
   port: 8888
 
 #
@@ -11,3 +11,11 @@ Server:
 SendEvent:
   donation: true
   chat: true
+
+Url:
+  # 생방송 링크
+  youtube: ""
+  # 알림창 Url
+  toonation: ""
+  # 알림창 Url
+  weflab: ""

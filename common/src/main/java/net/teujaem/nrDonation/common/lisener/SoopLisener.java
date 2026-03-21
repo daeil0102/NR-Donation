@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.teujaem.nrDonation.common.MainAPI;
 import net.teujaem.nrDonation.common.config.ConfigManager;
-import net.teujaem.nrDonation.common.nodeJSAPI.SoopChatApiClient;
+import net.teujaem.nrDonation.common.api.SoopChatAPI;
 import net.teujaem.nrDonation.common.data.PlatformType;
 import net.teujaem.nrDonation.common.data.soop.doantion.DonationList;
 import net.teujaem.nrDonation.common.websocket.sender.MCWebSocketSendMessage;
@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 
-public class SoopClient {
+public class SoopLisener {
 
     private static String BASE_URL;
     private static String CLIENT_ID;
@@ -35,14 +35,14 @@ public class SoopClient {
         BASE_URL = "http://" + MainAPI.getInstance().getDataClassManager().getNodeJSUrl().getURL();
         donationList = MainAPI.getInstance().getDataClassManager().getDonationList();
         System.out.println(BASE_URL);
-        SoopChatApiClient client = new SoopChatApiClient(BASE_URL);
+        SoopChatAPI client = new SoopChatAPI(BASE_URL);
 
         sessionManagement(client);
         eventStreaming(client);
 
     }
 
-    private static void sessionManagement(SoopChatApiClient client) throws IOException, InterruptedException {
+    private static void sessionManagement(SoopChatAPI client) throws IOException, InterruptedException {
 
         System.out.println("[SoopClient] 세션 시작");
         client.startSession(SESSION_ID, CLIENT_ID, CLIENT_SECRET, ACCESS_TOKEN);
@@ -57,7 +57,7 @@ public class SoopClient {
         client.getSessionStatus(SESSION_ID);
     }
 
-    private static void eventStreaming(SoopChatApiClient client) throws InterruptedException {
+    private static void eventStreaming(SoopChatAPI client) throws InterruptedException {
         System.out.println("[SoopClient] 채팅 이벤트 감지 시작");
 
         latch = new CountDownLatch(1);

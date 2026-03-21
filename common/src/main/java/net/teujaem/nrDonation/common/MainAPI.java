@@ -39,7 +39,7 @@ public class MainAPI {
         dataClassManager.crateSoopClient();
     }
 
-    public void runYoutubeClient() {
+    public void runYoutubeClient() throws Exception {
         dataClassManager.crateYoutubeClient(dataClassManager.getConfigManager().getYoutubeUrl());;
     }
 

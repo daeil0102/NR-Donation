@@ -1,5 +1,6 @@
 [versions]
 gson = "2.10.1"
+lombok = "1.18.32"
 java-websocket = "1.5.6"
 socket-io-client = "1.0.0"
 engine-io-client = "1.0.0"
@@ -18,12 +19,12 @@ selenium-api = "4.18.1"
 jsoup = "1.15.3"
 reactivestreams = "1.0.4"
 shadow = "9.2.2"
-uliv = "1.0.0"
 tooliv = "1.0.0"
 wfliv = "1.0.0"
 
 [libraries]
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
 java-websocket = { module = "org.java-websocket:Java-WebSocket", version.ref = "java-websocket" }
 socket-io-client = { module = "io.socket:socket.io-client", version.ref = "socket-io-client" }
 engine-io-client = { module = "io.socket:engine.io-client", version.ref = "engine-io-client" }
@@ -42,9 +43,8 @@ selenium-java = { module = "org.seleniumhq.selenium:selenium-java", version.ref 
 selenium-api = { module = "org.seleniumhq.selenium:selenium-api", version.ref = "selenium-api" }
 jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
 reactivestreams = { module = "org.reactivestreams:reactive-streams", version.ref = "reactivestreams" }
-uliv = { module = "net.teujaem:uLiv", version.ref = "uliv" }
 tooliv = { module = "net.teujaem:tooLiv", version.ref = "tooliv" }
-wfliv = { module = "net.teujaem:wfLiv", version.ref = "tooliv" }
+wfliv = { module = "net.teujaem:wfLiv", version.ref = "wfliv" }
 
 [plugins]
 shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }

@@ -28,7 +28,6 @@ dependencies {
     implementation(libs.jackson.annotations.get())
     implementation(libs.jackson.databind.get())
     implementation(libs.jackson.core.get())
-    implementation(libs.uliv.get())
     implementation(libs.tooliv.get())
     implementation(libs.wfliv.get())
 }

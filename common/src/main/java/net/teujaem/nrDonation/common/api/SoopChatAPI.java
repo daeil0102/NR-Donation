@@ -1,4 +1,4 @@
-package net.teujaem.nrDonation.common.nodeJSAPI;
+package net.teujaem.nrDonation.common.api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -17,8 +17,8 @@ import java.util.function.Consumer;
  * SOOP Chat SDK Bridge API Client
  * Node.js API와 통신하는 Java 클라이언트
  */
-public class SoopChatApiClient {
-    private static final Logger log = LoggerFactory.getLogger(SoopChatApiClient.class);
+public class SoopChatAPI {
+    private static final Logger log = LoggerFactory.getLogger(SoopChatAPI.class);
     private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
     private final String baseUrl;
@@ -26,7 +26,7 @@ public class SoopChatApiClient {
     private final Gson gson;
     private EventSource eventSource;
 
-    public SoopChatApiClient(String baseUrl) {
+    public SoopChatAPI(String baseUrl) {
         this.baseUrl = baseUrl.replaceAll("/+$", "");
         this.httpClient = new OkHttpClient.Builder()
                 .connectTimeout(0, TimeUnit.SECONDS)

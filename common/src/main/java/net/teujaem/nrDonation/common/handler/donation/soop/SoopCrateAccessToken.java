@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class SoopCrateAccessToken {
 
-    private static final String BASE_URL = "https://openapi.sooplive.co.kr/auth/token";
+    private static final String BASE_URL = "https://openapi.sooplive.com/auth/token";
 
     private static String clientId;
     private static String clientSecret;

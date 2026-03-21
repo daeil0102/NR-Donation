@@ -10,7 +10,7 @@ import java.net.URLEncoder;
 
 public class SoopCreateCode {
 
-    private static final String BASE_URL = "https://openapi.sooplive.co.kr/auth/code";
+    private static final String BASE_URL = "https://openapi.sooplive.com/auth/code";
 
     private static String clientId;
 

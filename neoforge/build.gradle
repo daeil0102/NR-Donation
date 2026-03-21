@@ -53,6 +53,7 @@ configurations {
 dependencies {
     // ===== 외부 라이브러리 =====
     shadow(libs.gson)
+    shadow(libs.lombok)
     shadow(libs.java.websocket)
     shadow(libs.socket.io.client)
     shadow(libs.engine.io.client)
@@ -74,6 +75,7 @@ dependencies {
     shadow(project(":common"))
     implementation(project(":common"))
     shadow(libs.tooliv.get())
+    shadow(libs.wfliv.get())
 }
 
 tasks.shadowJar {

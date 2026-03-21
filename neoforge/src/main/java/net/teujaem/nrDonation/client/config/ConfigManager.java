@@ -28,7 +28,6 @@ public class ConfigManager {
     private String youtubeUrl;
     private String toonationUrl;
     private String weflabUrl;
-    private String youtubeAPI;
 
     public ConfigManager() {
         load();
@@ -99,13 +98,6 @@ public class ConfigManager {
                 this.weflabUrl = "";
             }
 
-            Map<String, Object> apiConfig = (Map<String, Object>) configValues.get("API");
-            if (apiConfig != null) {
-                this.youtubeAPI = apiConfig.getOrDefault("youtube", "").toString();
-            } else {
-                this.youtubeAPI = "";
-            }
-
         } catch (IOException e) {
             NrDonation.getLogger().error("[NR-Donation] 설정 파일 로딩 실패", e);
             return;
@@ -125,7 +117,6 @@ public class ConfigManager {
         commonConfig.setYoutubeUrl(this.youtubeUrl);
         commonConfig.setToonationUrl(this.toonationUrl);
         commonConfig.setWeflabUrl(this.weflabUrl);
-        commonConfig.setYoutubeAPI(this.youtubeAPI);
 
         NrDonation.getLogger().info("[NR-Donation] 설정 로딩 완료 - IP: {}, Port: {}", this.ip, this.port);
     }

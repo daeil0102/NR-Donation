@@ -12,7 +12,7 @@ import net.teujaem.nrDonation.common.websocket.sender.MCWebSocketSendMessage;
 
 import java.net.URISyntaxException;
 
-public class ChzzkClient {
+public class ChzzkLisener {
 
     private Socket socket;
     private final ObjectMapper mapper = new ObjectMapper();

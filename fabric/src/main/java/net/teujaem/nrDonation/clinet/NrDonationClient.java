@@ -80,8 +80,20 @@ public class NrDonationClient implements ClientModInitializer {
                     mcWebSocketSendMessage.to("event//login//" + platform);
                 }
                 if (event.equals("loginTry")) {
-                    if (platform.equals("soop")) login(PlatformType.SOOP);
-                    if (platform.equals("chzzk")) login(PlatformType.CHZZK);
+                    if (platform.equals("soop")) {
+                        try {
+                            login(PlatformType.SOOP);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    if (platform.equals("chzzk")) {
+                        try {
+                            login(PlatformType.CHZZK);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
                 }
             });
 
@@ -122,7 +134,11 @@ public class NrDonationClient implements ClientModInitializer {
             // soop eventLogin command
             dispatcher.register(literal("숲")
                 .then(literal("로그인").executes(ctx -> {
-                    login(PlatformType.SOOP);
+                    try {
+                        login(PlatformType.SOOP);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
                     return 1;
                 }))
                 .then(literal("로그아웃").executes(ctx -> {
@@ -134,7 +150,11 @@ public class NrDonationClient implements ClientModInitializer {
             // chzzk eventLogin command
             dispatcher.register(literal("치지직")
                 .then(literal("로그인").executes(ctx -> {
-                    login(PlatformType.CHZZK);
+                    try {
+                        login(PlatformType.CHZZK);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
                     return 1;
                 }))
                 .then(literal("로그아웃").executes(ctx -> {
@@ -145,15 +165,27 @@ public class NrDonationClient implements ClientModInitializer {
 
             dispatcher.register(literal("연결")
                 .then(literal("유튜브").executes(ctx -> {
-                    login(PlatformType.YOUTUBE);
+                    try {
+                        login(PlatformType.YOUTUBE);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
                     return 1;
                 }))
                 .then(literal("투네이션").executes(ctx -> {
-                    login(PlatformType.TOONATION);
+                    try {
+                        login(PlatformType.TOONATION);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
                     return 1;
                 }))
                 .then(literal("위플랩").executes(ctx -> {
-                    login(PlatformType.WEFLAB);
+                    try {
+                        login(PlatformType.WEFLAB);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
                     return 1;
                 }))
             );
@@ -175,7 +207,7 @@ public class NrDonationClient implements ClientModInitializer {
     */
 
     //로그인 시도
-    private void login(PlatformType platformType) {
+    private void login(PlatformType platformType) throws Exception {
         if (isLoginReturnType(platformType)) {
             return;
         }

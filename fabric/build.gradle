@@ -24,6 +24,7 @@ dependencies {
 
     // ===== 외부 라이브러리 =====
     implementation(include(libs.gson.get()))
+    implementation(include(libs.lombok.get()))
     implementation(include(libs.java.websocket.get()))
     implementation(include(libs.socket.io.client.get()))
     implementation(include(libs.engine.io.client.get()))
@@ -44,6 +45,7 @@ dependencies {
     implementation(include(libs.reactivestreams.get()))
     implementation(include(project(":common")))
     implementation(include(libs.tooliv.get()))
+    implementation(include(libs.wfliv.get()))
 }
 
 processResources {

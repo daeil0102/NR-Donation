@@ -8,10 +8,10 @@ import net.teujaem.nrDonation.common.data.SocketManager;
 import net.teujaem.nrDonation.common.data.chzzk.StateData;
 import net.teujaem.nrDonation.common.data.soop.NodeJSUrl;
 import net.teujaem.nrDonation.common.data.soop.doantion.DonationList;
-import net.teujaem.nrDonation.common.lisener.ChzzkClient;
-import net.teujaem.nrDonation.common.lisener.SoopClient;
-import net.teujaem.nrDonation.common.lisener.ToonationClient;
-import net.teujaem.nrDonation.common.lisener.YoutubeClient;
+import net.teujaem.nrDonation.common.lisener.ChzzkLisener;
+import net.teujaem.nrDonation.common.lisener.SoopLisener;
+import net.teujaem.nrDonation.common.lisener.ToonationLisener;
+import net.teujaem.nrDonation.common.lisener.YoutubeLisener;
 import net.teujaem.nrDonation.common.websocket.MCWebSocketClient;
 
 import java.io.IOException;
@@ -27,10 +27,10 @@ public class DataClassManager {
     private static LoginPlatform loginPlatform;
     private static AccessToken accessToken;
     private static SocketManager socketManager;
-    private static ChzzkClient chzzkClient;
-    private static YoutubeClient youtubeClient;
-    private static ToonationClient toonationClient;
-    private static SoopClient soopClient;
+    private static ChzzkLisener chzzkClient;
+    private static YoutubeLisener youtubeClient;
+    private static ToonationLisener toonationClient;
+    private static SoopLisener soopClient;
     private static MCWebSocketClient mcWebSocketClient;
     private static APIKey apiKey;
     private static NodeJSUrl nodeJSUrl;
@@ -81,11 +81,11 @@ public class DataClassManager {
         return apiKey;
     }
 
-    public ChzzkClient getChzzkClient() {
+    public ChzzkLisener getChzzkClient() {
         return chzzkClient;
     }
 
-    public SoopClient getSoopClient() {
+    public SoopLisener getSoopClient() {
         return soopClient;
     }
 
@@ -102,23 +102,23 @@ public class DataClassManager {
     }
 
     public void crateChzzkClient(String url) {
-        chzzkClient = new ChzzkClient();
+        chzzkClient = new ChzzkLisener();
         chzzkClient.run(url);
     }
 
     public void crateSoopClient() throws IOException, InterruptedException {
-        soopClient = new SoopClient();
+        soopClient = new SoopLisener();
         soopClient.run();
     }
 
-    public void crateYoutubeClient(String url) {
+    public void crateYoutubeClient(String url) throws Exception {
         url = url.replace("https://www.youtube.com/watch?v=", "");
-        youtubeClient = new YoutubeClient(url, configManager.getYoutubeAPI());
+        youtubeClient = new YoutubeLisener(url);
     }
 
     public void crateToonationClient(String url) {
         url = url.replace("https://toon.at/widget/alertbox/", "");
-        toonationClient = new ToonationClient(url);
+        toonationClient = new ToonationLisener(url);
     }
 
 

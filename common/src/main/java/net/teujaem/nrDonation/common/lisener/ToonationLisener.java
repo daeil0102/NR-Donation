@@ -7,14 +7,14 @@ import net.teujaem.nrDonation.common.MainAPI;
 import net.teujaem.nrDonation.common.config.ConfigManager;
 import net.teujaem.nrDonation.common.websocket.sender.MCWebSocketSendMessage;
 
-public class ToonationClient {
+public class ToonationLisener {
     
     private final ConfigManager configManager = MainAPI.getInstance().getDataClassManager().getConfigManager();
 
     private static String url;
 
-    public ToonationClient(String url) {
-        ToonationClient.url = url;
+    public ToonationLisener(String url) {
+        ToonationLisener.url = url;
         run();
     }
 
@@ -24,7 +24,7 @@ public class ToonationClient {
             .addListener(new ToonationEventListener() {
                 @Override
                 public void onDonation(Donation donation) {
-                    ToonationClient.this.onDonation(donation.getNickName(), (int) donation.getAmount(), donation.getComment());
+                    ToonationLisener.this.onDonation(donation.getNickName(), (int) donation.getAmount(), donation.getComment());
                 }
 
                 @Override

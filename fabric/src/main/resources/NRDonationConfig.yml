@@ -19,7 +19,3 @@ Url:
   toonation: ""
   # 알림창 Url
   weflab: ""
-
-API:
-  # YouTube Data API v3 API
-  youtube: ""
