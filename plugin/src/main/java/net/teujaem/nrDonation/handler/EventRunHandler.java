@@ -40,7 +40,7 @@ public class EventRunHandler {
                 String id = application.getKeyUser(ws);
                 if (id == null) return; // 세션에 추가되지 않은 상태 예외처리
                 if (eventType.equals("donation")) {
-                    String flatform = messages[3];
+                    String platform = messages[3];
                     String sender = messages[4];
                     int amount;
                     String eventMessage = "null";
@@ -54,35 +54,35 @@ public class EventRunHandler {
                         throw new RuntimeException(e);
                     }
                     if (
-                        flatform == null ||
+                        platform == null ||
                         sender == null
                     ) return;
-                    onDonation(id, flatform, sender, amount, eventMessage);
+                    onDonation(id, platform, sender, amount, eventMessage);
 
                 }
 
                 if (eventType.equals("chat")) {
-                    String flatform = messages[3];
+                    String platform = messages[3];
                     String sender = messages[4];
                     String eventMessage = "null";
                     if (messages[5] != null) {
                         eventMessage = messages[5];
                     }
                     if ( //예외처리
-                        flatform == null ||
+                        platform == null ||
                         sender == null
                     ) return;
-                    onChat(id, flatform, sender, eventMessage);
+                    onChat(id, platform, sender, eventMessage);
                 }
                 if (eventType.equals("login")) {
-                    String flatform = messages[3];
-                    if (flatform == null) return;
-                    onLogin(id, flatform);
+                    String platform = messages[3];
+                    if (platform == null) return;
+                    onLogin(id, platform);
                 }
                 if (eventType.equals("logout")) {
-                    String flatform = messages[3];
-                    if (flatform == null) return;
-                    onLogout(id, flatform);
+                    String platform = messages[3];
+                    if (platform == null) return;
+                    onLogout(id, platform);
                 }
             }
         }
@@ -106,113 +106,113 @@ public class EventRunHandler {
         String type = messages[1];
         if (type.equals("event")) {
             String eventType = messages[2];
-            String flatform = messages[3];
+            String platform = messages[3];
             Player player = Bukkit.getPlayer(id);
             if (player == null) return;
             if (eventType.equals("donation")) {
                 String sender = messages[4];
                 int amount = Integer.parseInt(messages[5]);
                 String eventMessage = messages[6];
-                onDonation(player, flatform, sender, amount, eventMessage);
+                onDonation(player, platform, sender, amount, eventMessage);
             }
             if (eventType.equals("chat")) {
                 String sender = messages[4];
                 String eventMessage = messages[5];
-                onChat(player, flatform, sender, eventMessage);
+                onChat(player, platform, sender, eventMessage);
             }
             if (eventType.equals("login")) {
-                onLogin(player, flatform);
+                onLogin(player, platform);
             }
             if (eventType.equals("logout")) {
-                onLogout(player, flatform);
+                onLogout(player, platform);
             }
         }
     }
 
-    private void onDonation(String id, String flatform, String sender, int amount, String eventMessage) {
+    private void onDonation(String id, String platform, String sender, int amount, String eventMessage) {
         Player player = Bukkit.getPlayer(id);
 
         if (player != null && player.isOnline()) { // 유저가 backend server에 접속중이면 이벤트 처리
             Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
-                DonationEvent bukkitEvent = new DonationEvent(flatform, sender, amount, eventMessage, player);
+                DonationEvent bukkitEvent = new DonationEvent(platform, sender, amount, eventMessage, player);
                 Bukkit.getPluginManager().callEvent(bukkitEvent);
             });
         }
         else { // 접속중이지 않으면 모든 다른 서버에 메세지 전송
-            application.broadcastServer( id + "//event//donation//" + flatform + "//" + sender + "//" + amount + "//" + eventMessage);
+            application.broadcastServer( id + "//event//donation//" + platform + "//" + sender + "//" + amount + "//" + eventMessage);
         }
     }
 
-    private void onChat(String id, String flatform, String sender, String eventMessage) {
+    private void onChat(String id, String platform, String sender, String eventMessage) {
         Player player = Bukkit.getPlayer(id);
 
         if (player != null && player.isOnline()) { // 유저가 backend server에 접속중이면 이벤트 처리
             Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
-                ChatEvent bukkitEvent = new ChatEvent(flatform, sender, eventMessage, player);
+                ChatEvent bukkitEvent = new ChatEvent(platform, sender, eventMessage, player);
                 Bukkit.getPluginManager().callEvent(bukkitEvent);
             });
         }
         else { // 접속중이지 않으면 모든 다른 서버에 메세지 전송
-            application.broadcastServer( id + "//event//chat//" + flatform + "//" + sender + "//" + eventMessage);
+            application.broadcastServer( id + "//event//chat//" + platform + "//" + sender + "//" + eventMessage);
         }
     }
 
-    private void onLogin(String id, String flatform) {
+    private void onLogin(String id, String platform) {
         Player player = Bukkit.getPlayer(id);
 
         if (player != null && player.isOnline()) { // 유저가 backend server에 접속중이면 이벤트 처리
             Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
-                LoginEvent loginEvent = new LoginEvent(flatform, player);
+                LoginEvent loginEvent = new LoginEvent(platform, player);
                 Bukkit.getPluginManager().callEvent(loginEvent);
             });
         }
         else { // 접속중이지 않으면 모든 다른 서버에 메세지 전송
-            application.broadcastServer( id + "//event//login//" + flatform);
+            application.broadcastServer( id + "//event//login//" + platform);
         }
     }
 
-    private void onLogout(String id, String flatform) {
+    private void onLogout(String id, String platform) {
         Player player = Bukkit.getPlayer(id);
 
         if (player != null && player.isOnline()) { // 유저가 backend server에 접속중이면 이벤트 처리
             Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
-                LogoutEvent logoutEvent = new LogoutEvent(flatform, player);
+                LogoutEvent logoutEvent = new LogoutEvent(platform, player);
                 Bukkit.getPluginManager().callEvent(logoutEvent);
             });
         }
         else { // 접속중이지 않으면 모든 다른 서버에 메세지 전송
-            application.broadcastServer( id + "//event//logout//" + flatform);
+            application.broadcastServer( id + "//event//logout//" + platform);
         }
     }
 
-    private void onDonation(Player player, String flatform, String sender, int amount, String eventMessage) {
+    private void onDonation(Player player, String platform, String sender, int amount, String eventMessage) {
         if (!(player != null || player.isOnline())) return;
         Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
-            DonationEvent bukkitEvent = new DonationEvent(flatform, sender, amount, eventMessage, player);
+            DonationEvent bukkitEvent = new DonationEvent(platform, sender, amount, eventMessage, player);
             Bukkit.getPluginManager().callEvent(bukkitEvent);
         });
     }
 
-    private void onChat(Player player, String flatform, String sender, String eventMessage) {
+    private void onChat(Player player, String platform, String sender, String eventMessage) {
         if (!(player != null || player.isOnline())) return;
         Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
-            ChatEvent bukkitEvent = new ChatEvent(flatform, sender, eventMessage, player);
+            ChatEvent bukkitEvent = new ChatEvent(platform, sender, eventMessage, player);
             Bukkit.getPluginManager().callEvent(bukkitEvent);
         });
     }
 
-    private void onLogin(Player player, String flatform) {
+    private void onLogin(Player player, String platform) {
         if (!(player != null || player.isOnline())) return;
         Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
-            LoginEvent loginEvent = new LoginEvent(flatform, player);
+            LoginEvent loginEvent = new LoginEvent(platform, player);
             Bukkit.getPluginManager().callEvent(loginEvent);
         });
     }
 
-    private void onLogout(Player player, String flatform) {
+    private void onLogout(Player player, String platform) {
         if (!(player != null || player.isOnline())) return;
         Bukkit.getScheduler().runTask(Main.getInstance(), () -> {
-            LogoutEvent logoutEvent = new LogoutEvent(flatform, player);
+            LogoutEvent logoutEvent = new LogoutEvent(platform, player);
             Bukkit.getPluginManager().callEvent(logoutEvent);
         });
     }
