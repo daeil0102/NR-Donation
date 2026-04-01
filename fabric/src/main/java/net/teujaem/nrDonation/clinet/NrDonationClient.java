@@ -3,6 +3,7 @@ package net.teujaem.nrDonation.clinet;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Util;
 import net.teujaem.nrDonation.common.MainAPI;
@@ -90,6 +91,27 @@ public class NrDonationClient implements ClientModInitializer {
                     if (platform.equals("chzzk")) {
                         try {
                             login(PlatformType.CHZZK);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    if (platform.equals("youtube")) {
+                        try {
+                            login(PlatformType.YOUTUBE);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    if (platform.equals("toonation")) {
+                        try {
+                            login(PlatformType.TOONATION);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    if (platform.equals("weflab")) {
+                        try {
+                            login(PlatformType.WEFLAB);
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
@@ -243,6 +265,7 @@ public class NrDonationClient implements ClientModInitializer {
         }
 
         if (platformType.equals(PlatformType.WEFLAB)) {
+            mainAPI.runWeflabClient();
             isWeflaboLogin = true;
             messageHandler.loginSuccess();
         }
@@ -253,8 +276,6 @@ public class NrDonationClient implements ClientModInitializer {
         if (platformType.equals(PlatformType.YOUTUBE)) {
             if (mainAPI.getDataClassManager().getConfigManager().getYoutubeUrl() == null) return true;
             if (mainAPI.getDataClassManager().getConfigManager().getYoutubeUrl().isEmpty()) return true;
-            if (mainAPI.getDataClassManager().getConfigManager().getYoutubeAPI() == null) return true;
-            if (mainAPI.getDataClassManager().getConfigManager().getYoutubeAPI().isEmpty()) return true;
         }
         if (platformType.equals(PlatformType.TOONATION)) {
             if (mainAPI.getDataClassManager().getConfigManager().getToonationUrl() == null) return true;

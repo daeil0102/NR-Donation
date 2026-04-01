@@ -1,5 +1,5 @@
 [versions]
-gson = "2.10.1"
+gson = "2.13.1"
 lombok = "1.18.32"
 java-websocket = "1.5.6"
 socket-io-client = "1.0.0"

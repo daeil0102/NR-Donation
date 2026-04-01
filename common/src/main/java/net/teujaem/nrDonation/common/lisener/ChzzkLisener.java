@@ -122,6 +122,13 @@ public class ChzzkLisener {
 
         System.out.println("[Chzzk Chat] " + nickname + ": " + message);
 
+        if (message == null) {
+            message = "null";
+        }
+        if (message.equals("")) {
+            message = "null";
+        }
+
         if (!configManager.getChat()) return;
 
         MCWebSocketSendMessage mcWebSocketSendMessage = new MCWebSocketSendMessage();

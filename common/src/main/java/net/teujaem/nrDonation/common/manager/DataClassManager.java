@@ -8,10 +8,7 @@ import net.teujaem.nrDonation.common.data.SocketManager;
 import net.teujaem.nrDonation.common.data.chzzk.StateData;
 import net.teujaem.nrDonation.common.data.soop.NodeJSUrl;
 import net.teujaem.nrDonation.common.data.soop.doantion.DonationList;
-import net.teujaem.nrDonation.common.lisener.ChzzkLisener;
-import net.teujaem.nrDonation.common.lisener.SoopLisener;
-import net.teujaem.nrDonation.common.lisener.ToonationLisener;
-import net.teujaem.nrDonation.common.lisener.YoutubeLisener;
+import net.teujaem.nrDonation.common.lisener.*;
 import net.teujaem.nrDonation.common.websocket.MCWebSocketClient;
 
 import java.io.IOException;
@@ -30,6 +27,7 @@ public class DataClassManager {
     private static ChzzkLisener chzzkClient;
     private static YoutubeLisener youtubeClient;
     private static ToonationLisener toonationClient;
+    private static WeflabLisener weflabLisener;
     private static SoopLisener soopClient;
     private static MCWebSocketClient mcWebSocketClient;
     private static APIKey apiKey;
@@ -121,6 +119,10 @@ public class DataClassManager {
         toonationClient = new ToonationLisener(url);
     }
 
+    public void crateWeflabClient(String url) {
+        url = url.replace("https://weflab.com/page/", "");
+        weflabLisener = new WeflabLisener(url);
+    }
 
     public void crateMcWebSocketClient() {
         try {

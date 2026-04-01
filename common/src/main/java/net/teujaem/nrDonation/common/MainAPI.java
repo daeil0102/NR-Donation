@@ -47,6 +47,10 @@ public class MainAPI {
         dataClassManager.crateToonationClient(dataClassManager.getConfigManager().getToonationUrl());
     }
 
+    public void runWeflabClient() {
+        dataClassManager.crateWeflabClient(dataClassManager.getConfigManager().getWeflabUrl());
+    }
+
     public void resetLoginPlatform() {
         dataClassManager.getLoginPlatform().setPlatformType(null);
     }

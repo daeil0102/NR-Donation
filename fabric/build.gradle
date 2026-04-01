@@ -45,7 +45,7 @@ dependencies {
     implementation(include(libs.reactivestreams.get()))
     implementation(include(project(":common")))
     implementation(include(libs.tooliv.get()))
-    implementation(include(libs.wfliv.get()))
+    //implementation(include(libs.wfliv.get()))
 }
 
 processResources {

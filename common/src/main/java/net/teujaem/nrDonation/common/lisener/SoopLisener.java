@@ -107,7 +107,7 @@ public class SoopLisener {
 
         if (donationType.equals(SoopDonationType.VIDEO)) {
             MCWebSocketSendMessage mcWebSocketSendMessage = new MCWebSocketSendMessage();
-            mcWebSocketSendMessage.to("event//donation//soop//" + nickname + "//" + donationList.getFirstCountOf(nickname) + "//null");
+            mcWebSocketSendMessage.to("event//donation//soop//" + nickname + "//" + count + "//null");
             return;
         }
 
@@ -118,6 +118,13 @@ public class SoopLisener {
         String nickname = node.path("userNickname").asText();
         String message = node.path("message").asText();
         System.out.println("[Soop Chat] " + nickname + ": " + message);
+
+        if (message == null) {
+            message = "null";
+        }
+        if (message.equals("")) {
+            message = "null";
+        }
 
         if (donationList.hasSender(nickname)) {
             if (!configManager.getDonation()) return;

@@ -23,8 +23,6 @@ public class ChzzkCrateAccessToken {
     }
 
     public String getAccessToken(String code, String state) throws Exception {
-
-        // body setting (Map.of → JDK 8 불가 → HashMap 사용)
         Map<String, String> map = new HashMap<>();
         map.put("grantType", "authorization_code");
         map.put("clientId", clientId);

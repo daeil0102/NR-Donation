@@ -23,7 +23,6 @@ public class ChzzkAddEvent {
     }
 
     private void addChatEvent(String sessionKey) throws IOException {
-        // body setting (Map.of 사용 불가 → HashMap으로 대체)
         Map<String, String> map = new HashMap<>();
         map.put("sessionKey", sessionKey);
 

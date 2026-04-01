@@ -8,7 +8,6 @@ public class ConfigManager {
     private boolean chat;
     private String youtubeUrl;
     private String toonationUrl;
-    private String youtubeAPI;
     private String weflabUrl;
 
 
@@ -34,10 +33,6 @@ public class ConfigManager {
 
     public String getToonationUrl() {
         return toonationUrl;
-    }
-
-    public String getYoutubeAPI() {
-        return youtubeAPI;
     }
 
     public String getWeflabUrl() {
@@ -66,10 +61,6 @@ public class ConfigManager {
 
     public void setToonationUrl(String toonationUrl) {
         this.toonationUrl = toonationUrl;
-    }
-
-    public void setYoutubeAPI(String youtubeAPI) {
-        this.youtubeAPI = youtubeAPI;
     }
 
     public void setWeflabUrl(String weflabUrl) {
