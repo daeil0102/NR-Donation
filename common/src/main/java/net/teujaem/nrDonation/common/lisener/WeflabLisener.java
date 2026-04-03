@@ -23,7 +23,9 @@ public class WeflabLisener {
                 .addListener(new WeflabListener() {
                     @Override
                     public void onDonation(Donation donation) {
-                        WeflabLisener.this.onDonation(donation.user().nickname(), (int) donation.amount(), donation.content());
+                        WeflabLisener.this.onDonation(donation.user().nickname(), (int) donation.amount(), donation.content(), donation.platformData().platform());
+                        System.out.println(donation.donationData());
+                        System.out.println(donation.platformData());
                     }
 
                     @Override
@@ -34,15 +36,15 @@ public class WeflabLisener {
                 .build();
     }
 
-    private void onDonation(String nickname, int amount, String message) {
+    private void onDonation(String nickname, int amount, String message, String platform) {
         nickname = nickname.replace("\"", "");
         message = message.replace("\"", "");
-        System.out.println("[Weflab Donation] " + nickname + "(" + amount + "원: " +  "): " + message);
+        System.out.println("[Soop Donation] " + nickname + ": " + amount + "원" + ": " + message);
 
         if (!configManager.getDonation()) return;
 
         MCWebSocketSendMessage mcWebSocketSendMessage = new MCWebSocketSendMessage();
-        mcWebSocketSendMessage.to("event//donation//weflab//" + nickname + "//" + amount + "//" + message);
+        mcWebSocketSendMessage.to("event//donation//weflab_" + platform + "//" + nickname + "//" + amount + "//" + message);
     }
 
 }

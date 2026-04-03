@@ -37,7 +37,7 @@ public class ToonationLisener {
     private void onDonation(String nickname, int amount, String message) {
         nickname = nickname.replace("\"", "");
         message = message.replace("\"", "");
-        System.out.println("[Toonation Donation] " + nickname + "(" + amount + "원: " +  "): " + message);
+        System.out.println("[Soop Donation] " + nickname + ": " + amount + "원" + ": " + message);
 
         if (!configManager.getDonation()) return;
 

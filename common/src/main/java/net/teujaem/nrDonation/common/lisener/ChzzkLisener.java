@@ -105,10 +105,10 @@ public class ChzzkLisener {
         String nickname = node.path("donatorNickname").asText();
         String amount = node.path("payAmount").asText();
         String message = node.path("donationText").asText();
-
+        
         if (message.isEmpty()) message = "null";
 
-        System.out.println("[Chzzk Donation] " + nickname + "(" + amount + "치즈: " +  "): " + message);
+        System.out.println("[Soop Donation] " + nickname + ": " + amount + "치즈" + ": " + message);
 
         if (!configManager.getDonation()) return;
 

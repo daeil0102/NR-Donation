@@ -18,7 +18,7 @@ repositories {
 dependencies {
     // ===== Fabric 기본 =====
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    mappings "net.fabricmc:yarn:${project.minecraft_version}+build.1:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
@@ -43,9 +43,11 @@ dependencies {
     implementation(include(libs.selenium.api.get()))
     implementation(include(libs.jsoup.get()))
     implementation(include(libs.reactivestreams.get()))
+    implementation(include(libs.jcefmaven.get()))
+    implementation(include(libs.jcef.get()))
     implementation(include(project(":common")))
     implementation(include(libs.tooliv.get()))
-    //implementation(include(libs.wfliv.get()))
+    implementation(include(libs.wfliv.get()))
 }
 
 processResources {

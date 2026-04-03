@@ -72,6 +72,8 @@ dependencies {
     shadow(libs.selenium.api.get())
     shadow(libs.jsoup.get())
     shadow(libs.reactivestreams.get())
+    shadow(libs.jcefmaven.get())
+    shadow(libs.jcef.get())
     shadow(project(":common"))
     implementation(project(":common"))
     shadow(libs.tooliv.get())

@@ -18,6 +18,8 @@ selenium-java = "4.18.1"
 selenium-api = "4.18.1"
 jsoup = "1.15.3"
 reactivestreams = "1.0.4"
+jcefmaven = "143.0.14"
+jcef = "78.1-win64"
 shadow = "9.2.2"
 tooliv = "1.0.0"
 wfliv = "1.0.0"
@@ -43,6 +45,8 @@ selenium-java = { module = "org.seleniumhq.selenium:selenium-java", version.ref 
 selenium-api = { module = "org.seleniumhq.selenium:selenium-api", version.ref = "selenium-api" }
 jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
 reactivestreams = { module = "org.reactivestreams:reactive-streams", version.ref = "reactivestreams" }
+jcefmaven = { module = "me.friwi:jcefmaven", version.ref = "jcefmaven" }
+jcef = { module = "com.github.doraig:jcef", version.ref = "jcef" }
 tooliv = { module = "net.teujaem:tooLiv", version.ref = "tooliv" }
 wfliv = { module = "net.teujaem:wfLiv", version.ref = "wfliv" }
 
